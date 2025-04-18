@@ -263,9 +263,7 @@ export default function HelpCenterPage() {
                     <div className="bg-primary-50 p-3 rounded-lg">
                       <FileText className="h-6 w-6 text-primary-500" />
                     </div>
-                    <div className="flex-1">
-                      <h />
-                    </div>
+                    <div className="flex-1">{/* Removed invalid h tag */}</div>
                     <div className="flex-1">
                       <h3 className="font-medium mb-1">FCRA Compliance Guide</h3>
                       <p className="text-sm text-muted-foreground mb-3">

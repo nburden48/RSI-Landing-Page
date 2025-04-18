@@ -1,44 +1,35 @@
-// Core entity types
-export type Client = {
-  clientGuid: string
-  name: string
-  email: string
-  status: "active" | "inactive"
-  phone?: string
-  address?: string
-  city?: string
-  state?: string
-  zipCode?: string
+export type ApiResponse<T> = {
+  success: boolean
+  data?: T
+  error?: {
+    code: string
+    message: string
+  }
+  message?: string
 }
 
 export type Applicant = {
   applicantGuid: string
   firstName: string
   middleName?: string
-  noMiddleName?: boolean
   lastName: string
-  generation?: string
-  gender?: "MALE" | "FEMALE" | "UNKNOWN"
-  ssn?: string
-  race?: string
-  dateOfBirth?: string
   email?: string
   phoneNumber?: string
+  proposedPosition?: string
+  status: string
+  dateSubmitted: string
+  clientGuid: string
+  gender?: string
+  ssn?: string
+  dateOfBirth?: string
   driverLicense?: string
   driverLicenseState?: string
-  proposedPosition?: string
-  proposedSalary?: string
-  monthlyIncome?: number
-  monthlyDebt?: number
-  monthlyRent?: number
-  desiredUnit?: string
-  clientGuid: string
 }
 
 export type ApplicantAddress = {
   addressGuid: string
   applicantGuid: string
-  addressType: "CURRENT" | "PREVIOUS" | "PERMANENT"
+  addressType: string
   address1: string
   address2?: string
   city: string
@@ -86,21 +77,6 @@ export type ApplicantEducation = {
   completed?: boolean
 }
 
-export type Search = {
-  searchGuid: string
-  applicantGuid: string
-  type: string
-  displayName: string
-  status: "completed" | "in-progress" | "pending"
-  dateOrdered: string
-  dateCompleted?: string
-  estimatedCompletion?: string
-  result?: string
-  issue?: string
-  location?: string
-  price?: number
-}
-
 export type ClientProduct = {
   clientProductGuid: string
   clientGuid: string
@@ -117,10 +93,25 @@ export type Order = {
   applicantGuid: string
   clientProductGuid: string
   clientReference?: string
-  status: "completed" | "in-progress" | "pending"
+  status: string
   dateOrdered: string
   dateCompleted?: string
   searches: Search[]
+}
+
+export type Search = {
+  searchGuid: string
+  applicantGuid: string
+  type: string
+  displayName: string
+  status: string
+  dateOrdered: string
+  dateCompleted?: string
+  estimatedCompletion?: string
+  result?: string
+  issue?: string
+  location: string
+  price?: number
 }
 
 export type Message = {
@@ -135,6 +126,18 @@ export type Message = {
   fromClient: boolean
 }
 
+export type Client = {
+  clientGuid: string
+  name: string
+  email: string
+  status: string
+  phone?: string
+  address?: string
+  city?: string
+  state?: string
+  zipCode?: string
+}
+
 export type Fee = {
   feeGuid: string
   clientGuid: string
@@ -143,25 +146,17 @@ export type Fee = {
   effectiveDate: string
 }
 
-// API response types
-export type ApiResponse<T> = {
-  success: boolean
-  data?: T
-  error?: {
-    code: string
-    message: string
-  }
-  message?: string
-}
-
-export type PaginatedResponse<T> = {
-  content: T[]
-  totalElements: number
-  totalPages: number
-  size: number
-  number: number
-  first: boolean
-  last: boolean
+export type BackgroundCheck = {
+  id: number
+  applicantId: number
+  type: string
+  location: string
+  status: string
+  dateOrdered: string
+  dateCompleted?: string
+  estimatedCompletion?: string
+  result?: string
+  issue?: string
 }
 
 export type DashboardSummary = {
@@ -176,15 +171,12 @@ export type DashboardSummary = {
   }[]
 }
 
-export type BackgroundCheck = {
-  id: number
-  applicantId: number
-  type: string
-  location: string
-  status: string
-  dateOrdered: string
-  dateCompleted?: string
-  estimatedCompletion?: string
-  result?: string
-  issue?: string
+export type PaginatedResponse<T> = {
+  content: T[]
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  first: boolean
+  last: boolean
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { RsiBanner } from "@/components/rsi-banner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -226,21 +225,16 @@ export default function SearchesPage() {
         <p className="text-muted-foreground">View and manage all your background checks and search requests.</p>
       </div>
 
-      <RsiBanner
-        title="Background Check Management"
-        description="Monitor the status of background checks, view results, and order new searches. Our comprehensive screening solutions help you make informed decisions."
-      >
-        <div className="flex flex-wrap gap-3">
-          <Button className="bg-white text-primary-500 hover:bg-gray-100">
-            <FileText className="mr-2 h-4 w-4" />
-            Order New Check
-          </Button>
-          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-            <Download className="mr-2 h-4 w-4" />
-            Download Reports
-          </Button>
-        </div>
-      </RsiBanner>
+      <div className="flex flex-wrap gap-3">
+        <Button>
+          <FileText className="mr-2 h-4 w-4" />
+          Order New Check
+        </Button>
+        <Button variant="outline">
+          <Download className="mr-2 h-4 w-4" />
+          Download Reports
+        </Button>
+      </div>
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative w-full sm:w-[250px]">
