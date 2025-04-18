@@ -1,9 +1,7 @@
 import { ApplicantsList } from "@/components/applicants-list"
-import { RsiBanner } from "@/components/rsi-banner"
-import { RsiCta } from "@/components/rsi-cta"
 import { Button } from "@/components/ui/button"
-import { UserPlus, Download } from "lucide-react"
-import Link from "next/link"
+import { Download, HelpCircle, Video, FileText } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function ApplicantsPage() {
   return (
@@ -13,35 +11,56 @@ export default function ApplicantsPage() {
         <p className="text-muted-foreground">View and manage all your applicants and their background checks.</p>
       </div>
 
-      <RsiBanner
-        title="Applicant Management"
-        description="Add new applicants, view existing profiles, and track background check progress. Our system makes it easy to manage all your applicant information in one place."
-      >
-        <div className="flex flex-wrap gap-3">
-          <Button className="bg-white text-primary-500 hover:bg-gray-100" asChild>
-            <Link href="#">
-              <UserPlus className="mr-2 h-4 w-4" />
-              Add New Applicant
-            </Link>
-          </Button>
-
-          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white/10" asChild>
-            <Link href="#">
-              <Download className="mr-2 h-4 w-4" />
-              Export Applicants
-            </Link>
-          </Button>
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex-1 space-y-6 max-w-3xl">
+          <ApplicantsList />
         </div>
-      </RsiBanner>
 
-      <ApplicantsList />
+        {/* Right side - Resources and Help */}
+        <div className="w-full md:w-80 space-y-6">
+          <Card>
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <Download className="h-5 w-5 text-primary-500" />
+                <h3 className="font-medium">Export Applicants</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">Download a CSV file of your applicants for your records.</p>
+              <Button variant="outline" className="w-full">
+                <Download className="mr-2 h-4 w-4" />
+                Export Applicants
+              </Button>
+            </CardContent>
+          </Card>
 
-      <RsiCta
-        title="Need to run background checks on multiple applicants?"
-        description="Our bulk processing feature allows you to efficiently manage multiple background checks at once."
-        primaryButtonText="Learn More"
-        secondaryButtonText="Contact Sales"
-      />
+          <Card>
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="h-5 w-5 text-primary-500" />
+                <h3 className="font-medium">Need Help?</h3>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Video className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">Managing Applicants</h4>
+                    <p className="text-xs text-muted-foreground">Watch our tutorial video</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <FileText className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">Applicant Best Practices</h4>
+                    <p className="text-xs text-muted-foreground">Read our guide</p>
+                  </div>
+                </div>
+              </div>
+              <Button variant="outline" size="sm" className="w-full">
+                Visit Help Center
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </div>
   )
 }

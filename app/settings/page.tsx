@@ -19,6 +19,7 @@ export default function SettingsPage() {
   const [searchIssue, setSearchIssue] = useState(true)
   const [newMessage, setNewMessage] = useState(true)
   const [reportReady, setReportReady] = useState(true)
+  const [density, setDensity] = useState("comfortable")
 
   return (
     <div className="flex flex-col gap-6">
@@ -28,10 +29,9 @@ export default function SettingsPage() {
       </div>
 
       <Tabs defaultValue="preferences" className="w-full">
-        <TabsList className="grid w-full max-w-[600px] grid-cols-3">
+        <TabsList className="grid w-full max-w-[600px] grid-cols-2">
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="appearance">Appearance</TabsTrigger>
         </TabsList>
         <TabsContent value="preferences" className="mt-4">
           <Card>
@@ -81,42 +81,92 @@ export default function SettingsPage() {
                 <Separator />
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Language & Region</h3>
+                  <h3 className="text-lg font-medium">Content Density</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
-                        <Label htmlFor="language">Language</Label>
-                        <p className="text-sm text-muted-foreground">
-                          Select your preferred language for the dashboard.
-                        </p>
+                        <Label htmlFor="density">Content Density</Label>
+                        <p className="text-sm text-muted-foreground">Adjust the density of content in the dashboard.</p>
                       </div>
-                      <Select defaultValue="en">
+                      <Select value={density} onValueChange={setDensity}>
                         <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select language" />
+                          <SelectValue placeholder="Select density" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="en">English</SelectItem>
-                          <SelectItem value="es">Español</SelectItem>
-                          <SelectItem value="fr">Français</SelectItem>
+                          <SelectItem value="compact">Compact</SelectItem>
+                          <SelectItem value="comfortable">Comfortable</SelectItem>
+                          <SelectItem value="spacious">Spacious</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <Label htmlFor="dateFormat">Date Format</Label>
-                        <p className="text-sm text-muted-foreground">Select your preferred date format.</p>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* Content Density Examples */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Content Density Examples</h3>
+                  <div className="space-y-4">
+                    {density === "compact" && (
+                      <div className="border rounded-md p-2">
+                        <h4 className="text-sm font-medium mb-1">Compact Density</h4>
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center py-1 border-b text-xs">
+                            <span>Item 1</span>
+                            <span>Value 1</span>
+                          </div>
+                          <div className="flex justify-between items-center py-1 border-b text-xs">
+                            <span>Item 2</span>
+                            <span>Value 2</span>
+                          </div>
+                          <div className="flex justify-between items-center py-1 text-xs">
+                            <span>Item 3</span>
+                            <span>Value 3</span>
+                          </div>
+                        </div>
                       </div>
-                      <Select defaultValue="mm-dd-yyyy">
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select date format" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="mm-dd-yyyy">MM/DD/YYYY</SelectItem>
-                          <SelectItem value="dd-mm-yyyy">DD/MM/YYYY</SelectItem>
-                          <SelectItem value="yyyy-mm-dd">YYYY/MM/DD</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
+                    )}
+
+                    {density === "comfortable" && (
+                      <div className="border rounded-md p-3">
+                        <h4 className="text-sm font-medium mb-2">Comfortable Density</h4>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center py-2 border-b">
+                            <span>Item 1</span>
+                            <span>Value 1</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2 border-b">
+                            <span>Item 2</span>
+                            <span>Value 2</span>
+                          </div>
+                          <div className="flex justify-between items-center py-2">
+                            <span>Item 3</span>
+                            <span>Value 3</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {density === "spacious" && (
+                      <div className="border rounded-md p-4">
+                        <h4 className="text-sm font-medium mb-3">Spacious Density</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center py-3 border-b">
+                            <span>Item 1</span>
+                            <span>Value 1</span>
+                          </div>
+                          <div className="flex justify-between items-center py-3 border-b">
+                            <span>Item 2</span>
+                            <span>Value 2</span>
+                          </div>
+                          <div className="flex justify-between items-center py-3">
+                            <span>Item 3</span>
+                            <span>Value 3</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -132,7 +182,7 @@ export default function SettingsPage() {
                           Select your preferred default view for the dashboard.
                         </p>
                       </div>
-                      <Select defaultValue="applicants">
+                      <Select defaultValue="dashboard">
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select default view" />
                         </SelectTrigger>
@@ -248,83 +298,9 @@ export default function SettingsPage() {
                 </div>
               </div>
             </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="appearance" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Appearance Settings</CardTitle>
-              <CardDescription>Customize the look and feel of your dashboard.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Theme</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div
-                      className={`flex flex-col items-center gap-2 p-4 rounded-lg border cursor-pointer transition-colors ${
-                        theme === "light" ? "border-blue-500 bg-blue-50" : ""
-                      }`}
-                      onClick={() => setTheme("light")}
-                    >
-                      <div className="h-20 w-full rounded-md bg-white border shadow-sm flex items-center justify-center">
-                        <Sun className="h-8 w-8 text-amber-500" />
-                      </div>
-                      <span className="text-sm font-medium">Light</span>
-                    </div>
-                    <div
-                      className={`flex flex-col items-center gap-2 p-4 rounded-lg border cursor-pointer transition-colors ${
-                        theme === "dark" ? "border-blue-500 bg-blue-50" : ""
-                      }`}
-                      onClick={() => setTheme("dark")}
-                    >
-                      <div className="h-20 w-full rounded-md bg-gray-900 border shadow-sm flex items-center justify-center">
-                        <Moon className="h-8 w-8 text-blue-400" />
-                      </div>
-                      <span className="text-sm font-medium">Dark</span>
-                    </div>
-                    <div
-                      className={`flex flex-col items-center gap-2 p-4 rounded-lg border cursor-pointer transition-colors ${
-                        theme === "system" ? "border-blue-500 bg-blue-50" : ""
-                      }`}
-                      onClick={() => setTheme("system")}
-                    >
-                      <div className="h-20 w-full rounded-md bg-gradient-to-br from-white to-gray-900 border shadow-sm flex items-center justify-center">
-                        <Laptop className="h-8 w-8 text-gray-600" />
-                      </div>
-                      <span className="text-sm font-medium">System</span>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Density</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-0.5">
-                        <Label htmlFor="density">Content Density</Label>
-                        <p className="text-sm text-muted-foreground">Adjust the density of content in the dashboard.</p>
-                      </div>
-                      <Select defaultValue="comfortable">
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select density" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="compact">Compact</SelectItem>
-                          <SelectItem value="comfortable">Comfortable</SelectItem>
-                          <SelectItem value="spacious">Spacious</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
             <div className="flex justify-end p-6 pt-0">
               <Button>
-                <Save className="mr-2 h-4 w-4" /> Save Appearance Settings
+                <Save className="mr-2 h-4 w-4" /> Save Notification Settings
               </Button>
             </div>
           </Card>

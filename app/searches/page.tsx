@@ -1,10 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { RsiBanner } from "@/components/rsi-banner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -17,7 +16,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { CheckSquare, Clock, AlertCircle, Calendar, Search, MapPin, FileText, User, Download } from "lucide-react"
+import {
+  CheckSquare,
+  Clock,
+  AlertCircle,
+  Calendar,
+  Search,
+  MapPin,
+  FileText,
+  User,
+  HelpCircle,
+  Video,
+} from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import type { Search as SearchType } from "@/types/api"
 
@@ -226,177 +236,212 @@ export default function SearchesPage() {
         <p className="text-muted-foreground">View and manage all your background checks and search requests.</p>
       </div>
 
-      <RsiBanner
-        title="Background Check Management"
-        description="Monitor the status of background checks, view results, and order new searches. Our comprehensive screening solutions help you make informed decisions."
-      >
-        <div className="flex flex-wrap gap-3">
-          <Button className="bg-white text-primary-500 hover:bg-gray-100">
-            <FileText className="mr-2 h-4 w-4" />
-            Order New Check
-          </Button>
-          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-            <Download className="mr-2 h-4 w-4" />
-            Download Reports
-          </Button>
-        </div>
-      </RsiBanner>
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex-1 space-y-6 max-w-3xl">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative w-full sm:w-[250px]">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search background checks..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-8 w-full"
+              />
+            </div>
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-full sm:w-[150px]">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                <SelectItem value="completed">Completed</SelectItem>
+                <SelectItem value="in-progress">In Progress</SelectItem>
+                <SelectItem value="pending">Pending Information</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-full sm:w-[180px]">
+                <SelectValue placeholder="Search Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                {searchTypes.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {searches.find((s) => s.type === type)?.displayName || type}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative w-full sm:w-[250px]">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search background checks..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-8 w-full"
-          />
-        </div>
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-full sm:w-[150px]">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-            <SelectItem value="in-progress">In Progress</SelectItem>
-            <SelectItem value="pending">Pending Information</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="Search Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            {searchTypes.map((type) => (
-              <SelectItem key={type} value={type}>
-                {searches.find((s) => s.type === type)?.displayName || type}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <Tabs defaultValue="table" className="w-full">
-        <TabsList className="grid w-full max-w-[400px] grid-cols-2">
-          <TabsTrigger value="table">Table View</TabsTrigger>
-          <TabsTrigger value="cards">Card View</TabsTrigger>
-        </TabsList>
-        <TabsContent value="table" className="mt-4">
-          <Card>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Search Type</TableHead>
-                    <TableHead>Location</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Date Ordered</TableHead>
-                    <TableHead>Result</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredSearches.length > 0 ? (
-                    filteredSearches.map((search) => (
-                      <TableRow key={search.searchGuid}>
-                        <TableCell className="font-medium">
-                          <div className="flex items-center gap-2">
+          <Tabs defaultValue="table" className="w-full">
+            <TabsList className="grid w-full max-w-[400px] grid-cols-2">
+              <TabsTrigger value="table">Table View</TabsTrigger>
+              <TabsTrigger value="cards">Card View</TabsTrigger>
+            </TabsList>
+            <TabsContent value="table" className="mt-4">
+              <Card>
+                <CardContent className="p-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Search Type</TableHead>
+                        <TableHead>Location</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Date Ordered</TableHead>
+                        <TableHead>Result</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredSearches.length > 0 ? (
+                        filteredSearches.map((search) => (
+                          <TableRow key={search.searchGuid}>
+                            <TableCell className="font-medium">
+                              <div className="flex items-center gap-2">
+                                {getStatusIcon(search.status)}
+                                {search.displayName}
+                              </div>
+                            </TableCell>
+                            <TableCell>{search.location}</TableCell>
+                            <TableCell>{getStatusBadge(search.status)}</TableCell>
+                            <TableCell>{new Date(search.dateOrdered).toLocaleDateString()}</TableCell>
+                            <TableCell>{search.result ? getResultBadge(search.result) : "-"}</TableCell>
+                            <TableCell className="text-right">
+                              <Button variant="ghost" size="sm" onClick={() => viewSearchDetails(search)}>
+                                View Details
+                              </Button>
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={6} className="text-center py-6">
+                            No background checks found matching your filters.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+            <TabsContent value="cards" className="mt-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {filteredSearches.length > 0 ? (
+                  filteredSearches.map((search) => (
+                    <Card key={search.searchGuid} className="overflow-hidden">
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex items-center gap-2 text-lg font-medium">
                             {getStatusIcon(search.status)}
                             {search.displayName}
                           </div>
-                        </TableCell>
-                        <TableCell>{search.location}</TableCell>
-                        <TableCell>{getStatusBadge(search.status)}</TableCell>
-                        <TableCell>{new Date(search.dateOrdered).toLocaleDateString()}</TableCell>
-                        <TableCell>{search.result ? getResultBadge(search.result) : "-"}</TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm" onClick={() => viewSearchDetails(search)}>
+                          {getStatusBadge(search.status)}
+                        </div>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
+                          <MapPin className="h-3.5 w-3.5" />
+                          {search.location}
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm text-muted-foreground">Date Ordered:</span>
+                            <span className="text-sm">{new Date(search.dateOrdered).toLocaleDateString()}</span>
+                          </div>
+                          {search.dateCompleted && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-muted-foreground">Date Completed:</span>
+                              <span className="text-sm">{new Date(search.dateCompleted).toLocaleDateString()}</span>
+                            </div>
+                          )}
+                          {search.estimatedCompletion && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-muted-foreground">Est. Completion:</span>
+                              <span className="text-sm">
+                                {new Date(search.estimatedCompletion).toLocaleDateString()}
+                              </span>
+                            </div>
+                          )}
+                          {search.result && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-muted-foreground">Result:</span>
+                              <span>{getResultBadge(search.result)}</span>
+                            </div>
+                          )}
+                          {search.issue && (
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-muted-foreground">Issue:</span>
+                              <span className="text-sm text-amber-600">{search.issue}</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="mt-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full"
+                            onClick={() => viewSearchDetails(search)}
+                          >
                             View Details
                           </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  ) : (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center py-6">
-                        No background checks found matching your filters.
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-8">
+                    <p className="text-muted-foreground">No background checks found matching your filters.</p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Right side - Resources and Help */}
+        <div className="w-full md:w-80 space-y-6">
+          <Card>
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-primary-500" />
+                <h3 className="font-medium">Order New Check</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Need to run a new background check? Click below to start the process.
+              </p>
+              <Button className="w-full">Order Background Check</Button>
             </CardContent>
           </Card>
-        </TabsContent>
-        <TabsContent value="cards" className="mt-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredSearches.length > 0 ? (
-              filteredSearches.map((search) => (
-                <Card key={search.searchGuid} className="overflow-hidden">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="flex items-center gap-2 text-lg">
-                        {getStatusIcon(search.status)}
-                        {search.displayName}
-                      </CardTitle>
-                      {getStatusBadge(search.status)}
-                    </div>
-                    <CardDescription>
-                      <div className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {search.location}
-                      </div>
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="pb-2">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">Date Ordered:</span>
-                        <span className="text-sm">{new Date(search.dateOrdered).toLocaleDateString()}</span>
-                      </div>
-                      {search.dateCompleted && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Date Completed:</span>
-                          <span className="text-sm">{new Date(search.dateCompleted).toLocaleDateString()}</span>
-                        </div>
-                      )}
-                      {search.estimatedCompletion && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Est. Completion:</span>
-                          <span className="text-sm">{new Date(search.estimatedCompletion).toLocaleDateString()}</span>
-                        </div>
-                      )}
-                      {search.result && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Result:</span>
-                          <span>{getResultBadge(search.result)}</span>
-                        </div>
-                      )}
-                      {search.issue && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Issue:</span>
-                          <span className="text-sm text-amber-600">{search.issue}</span>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="pt-2">
-                    <Button variant="outline" size="sm" className="w-full" onClick={() => viewSearchDetails(search)}>
-                      View Details
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-8">
-                <p className="text-muted-foreground">No background checks found matching your filters.</p>
+
+          <Card>
+            <CardContent className="p-4 space-y-4">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="h-5 w-5 text-primary-500" />
+                <h3 className="font-medium">Need Help?</h3>
               </div>
-            )}
-          </div>
-        </TabsContent>
-      </Tabs>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Video className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">How to Read Results</h4>
+                    <p className="text-xs text-muted-foreground">Watch our tutorial video</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <FileText className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">Understanding Statuses</h4>
+                    <p className="text-xs text-muted-foreground">Learn what each status means</p>
+                  </div>
+                </div>
+              </div>
+              <Button variant="outline" size="sm" className="w-full">
+                Visit Help Center
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
 
       {/* Search Details Dialog */}
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
@@ -531,7 +576,7 @@ export default function SearchesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      {/* The rest of the searches page content would go here */}
+
       {filteredSearches.length === 0 && !loading && (
         <div className="text-center py-12 bg-muted rounded-lg border">
           <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />

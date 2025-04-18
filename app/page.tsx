@@ -1,122 +1,98 @@
 import { SearchOverview } from "@/components/search-overview"
 import { ApplicantList } from "@/components/applicant-list"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FileText, Users, MessageSquare, ArrowRight } from "lucide-react"
-import { RsiServices } from "@/components/rsi-services"
-import { Testimonials } from "@/components/testimonials"
-import Link from "next/link"
+import { BookOpen, Bell, HelpCircle, Video, FileText } from "lucide-react"
 
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
-      {/* Welcome Banner */}
+      {/* Welcome Banner - Cosmetic only, no buttons */}
       <div className="rsi-pattern-bg rounded-lg p-6 text-white">
         <h1 className="text-3xl font-bold mb-2">Welcome to Reference Services Inc.</h1>
         <p className="text-lg opacity-90 max-w-2xl">
           Your trusted partner for comprehensive background screening solutions. Manage your applicants, track
           background checks, and access reports all in one place.
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          <Button className="bg-white text-primary-500 hover:bg-gray-100">
-            <Users className="mr-2 h-4 w-4" />
-            Add New Applicant
-          </Button>
-          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
-            <FileText className="mr-2 h-4 w-4" />
-            View Reports
-          </Button>
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex-1 space-y-8 max-w-3xl">
+          {/* Background Check Overview - Highlighted with border */}
+          <div className="border-2 border-primary-300 rounded-lg p-4 bg-primary-50">
+            <SearchOverview />
+          </div>
+
+          {/* Applicant List */}
+          <ApplicantList />
         </div>
-      </div>
 
-      {/* Background Check Overview - First section as requested */}
-      <SearchOverview />
+        {/* Right side - Announcements and Resources */}
+        <div className="w-full md:w-80 space-y-6">
+          {/* Announcements Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center text-lg">
+                <Bell className="mr-2 h-5 w-5 text-primary-500" />
+                Announcements
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="border-l-4 border-primary-500 pl-3 py-1">
+                <h4 className="font-medium text-sm">System Maintenance</h4>
+                <p className="text-xs text-muted-foreground">
+                  Scheduled maintenance on April 20, 2025 from 2-4 AM EST.
+                </p>
+                <p className="text-xs text-primary-600 mt-1 font-medium">Posted: April 15, 2025</p>
+              </div>
+              <div className="border-l-4 border-secondary-500 pl-3 py-1">
+                <h4 className="font-medium text-sm">New Feature: Bulk Processing</h4>
+                <p className="text-xs text-muted-foreground">You can now process multiple background checks at once.</p>
+                <p className="text-xs text-primary-600 mt-1 font-medium">Posted: April 10, 2025</p>
+              </div>
+              <Button variant="outline" size="sm" className="w-full">
+                View All Announcements
+              </Button>
+            </CardContent>
+          </Card>
 
-      {/* Applicant List - Second section as requested */}
-      <ApplicantList />
-
-      {/* Quick Access Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="rsi-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center text-lg">
-              <Users className="mr-2 h-5 w-5 text-primary-500" />
-              Applicants
-            </CardTitle>
-            <CardDescription>Manage your applicants</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm mb-4">
-              Add new applicants, view existing profiles, and track background check progress.
-            </p>
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <Link href="/applicants">
-                View Applicants
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="rsi-card-secondary">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center text-lg">
-              <FileText className="mr-2 h-5 w-5 text-secondary-500" />
-              Background Checks
-            </CardTitle>
-            <CardDescription>Track your searches</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm mb-4">
-              Monitor the status of background checks, view results, and order new searches.
-            </p>
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <Link href="/searches">
-                View Searches
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card className="rsi-card-accent">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center text-lg">
-              <MessageSquare className="mr-2 h-5 w-5 text-accent-500" />
-              Messages
-            </CardTitle>
-            <CardDescription>Communication center</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm mb-4">Stay in touch with our team, ask questions, and receive important updates.</p>
-            <Button variant="outline" size="sm" className="w-full" asChild>
-              <Link href="/messages">
-                View Messages
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* RSI Services - Moved down as requested */}
-      <RsiServices />
-
-      {/* Testimonials */}
-      <Testimonials />
-
-      <div className="bg-muted rounded-lg p-6 border">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h2 className="text-xl font-bold mb-1">Need Assistance?</h2>
-            <p className="text-muted-foreground">
-              Our support team is here to help you with any questions or concerns.
-            </p>
-          </div>
-          <div className="flex gap-3">
-            <Button variant="outline">View Help Center</Button>
-            <Button>Contact Support</Button>
-          </div>
+          {/* Resources Section */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center text-lg">
+                <BookOpen className="mr-2 h-5 w-5 text-primary-500" />
+                Resources
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start gap-2">
+                  <Video className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">Training Videos</h4>
+                    <p className="text-xs text-muted-foreground">Learn how to use the platform</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <HelpCircle className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">FAQ</h4>
+                    <p className="text-xs text-muted-foreground">Answers to common questions</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <FileText className="h-4 w-4 mt-1 text-primary-500" />
+                  <div>
+                    <h4 className="text-sm font-medium">User Guides</h4>
+                    <p className="text-xs text-muted-foreground">Detailed documentation</p>
+                  </div>
+                </div>
+              </div>
+              <Button variant="outline" size="sm" className="w-full">
+                Visit Help Center
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
