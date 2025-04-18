@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { RsiBanner } from "@/components/rsi-banner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -236,6 +237,16 @@ export default function MessagesPage() {
         <h1 className="text-3xl font-bold tracking-tight">Messages</h1>
         <p className="text-muted-foreground">View and manage your communication with Reference Services Inc.</p>
       </div>
+
+      <RsiBanner
+        title="Communication Center"
+        description="Stay in touch with our team, ask questions, and receive important updates about your background checks and applicants."
+      >
+        <Button className="bg-white text-primary-500 hover:bg-gray-100" onClick={() => setIsNewMessageOpen(true)}>
+          <Send className="mr-2 h-4 w-4" />
+          New Message
+        </Button>
+      </RsiBanner>
 
       <div className="flex flex-col sm:flex-row justify-between gap-4">
         <div className="flex flex-col sm:flex-row gap-4">

@@ -9,19 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { RsiBanner } from "@/components/rsi-banner"
-import {
-  FileText,
-  Mail,
-  Phone,
-  MessageSquare,
-  Video,
-  BookOpen,
-  HelpCircle,
-  Search,
-  Download,
-  ExternalLink,
-  ArrowRight,
-} from "lucide-react"
+import { FileText, Mail, Phone, MessageSquare, Video, BookOpen, HelpCircle, Search, Download } from "lucide-react"
 
 export default function HelpCenterPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -71,7 +59,7 @@ export default function HelpCenterPage() {
         </TabsList>
 
         {/* FAQ Tab */}
-        <TabsContent value="faq" className="mt-6">
+        <TabsContent value="faq" className="mt-6" id="faq">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -168,55 +156,13 @@ export default function HelpCenterPage() {
                     </p>
                   </AccordionContent>
                 </AccordionItem>
-
-                <AccordionItem value="item-6">
-                  <AccordionTrigger>How do I update my company information?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">To update your company information:</p>
-                    <ol className="list-decimal pl-5 space-y-1">
-                      <li>Click on "Profile" in the sidebar menu</li>
-                      <li>Select the "Company Info" tab</li>
-                      <li>Click the "Edit Profile" button</li>
-                      <li>Update your company information</li>
-                      <li>Click "Save Changes" to apply the updates</li>
-                    </ol>
-                    <p className="mt-2">
-                      If you need to make changes that aren't available in the profile settings, please contact our
-                      support team.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-7">
-                  <AccordionTrigger>How do I contact support?</AccordionTrigger>
-                  <AccordionContent>
-                    <p>You can contact our support team through several channels:</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2">
-                      <li>
-                        <span className="font-medium">Phone:</span> (800) 555-1234 (Monday-Friday, 8AM-6PM EST)
-                      </li>
-                      <li>
-                        <span className="font-medium">Email:</span> support@referenceservicesinc.com
-                      </li>
-                      <li>
-                        <span className="font-medium">Live Chat:</span> Available through the Help Center
-                      </li>
-                      <li>
-                        <span className="font-medium">Support Ticket:</span> Submit a ticket through the Contact Us page
-                      </li>
-                    </ul>
-                    <p className="mt-2">
-                      For urgent matters, we recommend calling our support line for immediate assistance.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
               </Accordion>
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Training Videos Tab */}
-        <TabsContent value="videos" className="mt-6">
+        <TabsContent value="videos" className="mt-6" id="videos">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -303,22 +249,12 @@ export default function HelpCenterPage() {
                   </div>
                 </div>
               </div>
-
-              <div className="mt-6 text-center">
-                <p className="text-sm text-muted-foreground mb-2">
-                  Need more training resources? Check out our complete video library.
-                </p>
-                <Button variant="outline">
-                  View All Training Videos
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Guides Tab */}
-        <TabsContent value="guides" className="mt-6">
+        <TabsContent value="guides" className="mt-6" id="guides">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -427,49 +363,12 @@ export default function HelpCenterPage() {
                   </CardContent>
                 </Card>
               </div>
-
-              <div className="mt-6">
-                <h3 className="font-medium mb-3">Forms and Templates</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Button variant="outline" className="justify-start h-auto py-3">
-                    <Download className="mr-2 h-4 w-4" />
-                    <div className="text-left">
-                      <div className="font-medium">Applicant Consent Form</div>
-                      <div className="text-xs text-muted-foreground">DOCX • 245 KB</div>
-                    </div>
-                  </Button>
-
-                  <Button variant="outline" className="justify-start h-auto py-3">
-                    <Download className="mr-2 h-4 w-4" />
-                    <div className="text-left">
-                      <div className="font-medium">Pre-Adverse Action Notice</div>
-                      <div className="text-xs text-muted-foreground">DOCX • 220 KB</div>
-                    </div>
-                  </Button>
-
-                  <Button variant="outline" className="justify-start h-auto py-3">
-                    <Download className="mr-2 h-4 w-4" />
-                    <div className="text-left">
-                      <div className="font-medium">Adverse Action Notice</div>
-                      <div className="text-xs text-muted-foreground">DOCX • 235 KB</div>
-                    </div>
-                  </Button>
-
-                  <Button variant="outline" className="justify-start h-auto py-3">
-                    <Download className="mr-2 h-4 w-4" />
-                    <div className="text-left">
-                      <div className="font-medium">FCRA Summary of Rights</div>
-                      <div className="text-xs text-muted-foreground">PDF • 320 KB</div>
-                    </div>
-                  </Button>
-                </div>
-              </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Contact Us Tab */}
-        <TabsContent value="contact" className="mt-6">
+        <TabsContent value="contact" className="mt-6" id="contact">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -511,21 +410,6 @@ export default function HelpCenterPage() {
                           Start Chat
                         </Button>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8">
-                    <h3 className="text-lg font-medium mb-4">Office Location</h3>
-                    <p className="text-muted-foreground">
-                      Reference Services Inc.
-                      <br />
-                      123 Business Avenue, Suite 400
-                      <br />
-                      Enterprise, CA 90210
-                    </p>
-
-                    <div className="mt-4 bg-muted h-[200px] rounded-lg flex items-center justify-center">
-                      <p className="text-muted-foreground">Map placeholder</p>
                     </div>
                   </div>
                 </div>
@@ -574,68 +458,12 @@ export default function HelpCenterPage() {
                       Submit Message
                     </Button>
                   </form>
-
-                  <div className="mt-6 p-4 bg-muted rounded-lg">
-                    <h4 className="font-medium flex items-center gap-2">
-                      <HelpCircle className="h-4 w-4 text-primary-500" />
-                      Support Ticket Status
-                    </h4>
-                    <p className="text-sm text-muted-foreground mt-2">
-                      Already submitted a support ticket? Check the status of your ticket.
-                    </p>
-                    <div className="flex gap-2 mt-3">
-                      <Input placeholder="Ticket number" className="max-w-[200px]" />
-                      <Button variant="outline">Check Status</Button>
-                    </div>
-                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
-
-      {/* Related Articles */}
-      <div className="mt-6">
-        <h2 className="text-xl font-bold mb-4">Related Articles</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
-            <CardContent className="p-4">
-              <h3 className="font-medium mb-2">Understanding Background Check Results</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                Learn how to interpret different background check results and what they mean for your hiring decisions.
-              </p>
-              <div className="flex items-center text-primary-500 text-sm">
-                Read more <ArrowRight className="ml-1 h-3.5 w-3.5" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
-            <CardContent className="p-4">
-              <h3 className="font-medium mb-2">FCRA Compliance Guide</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                Important information about Fair Credit Reporting Act compliance when conducting background checks.
-              </p>
-              <div className="flex items-center text-primary-500 text-sm">
-                Read more <ArrowRight className="ml-1 h-3.5 w-3.5" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
-            <CardContent className="p-4">
-              <h3 className="font-medium mb-2">Best Practices for Applicant Screening</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                Tips and recommendations for implementing an effective applicant screening process.
-              </p>
-              <div className="flex items-center text-primary-500 text-sm">
-                Read more <ArrowRight className="ml-1 h-3.5 w-3.5" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
     </div>
   )
 }

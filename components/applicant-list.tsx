@@ -123,8 +123,8 @@ const ApplicantList = React.memo(function ApplicantList() {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold tracking-tight">Recent Applicants</h2>
       <div className="flex flex-col sm:flex-row justify-between gap-4">
+        <h2 className="text-2xl font-bold tracking-tight">Recent Applicants</h2>
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
             placeholder="Search applicants..."

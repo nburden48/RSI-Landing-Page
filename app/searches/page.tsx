@@ -1,9 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { RsiBanner } from "@/components/rsi-banner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -16,7 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { CheckSquare, Clock, AlertCircle, Calendar, Search, MapPin, FileText, User } from "lucide-react"
+import { CheckSquare, Clock, AlertCircle, Calendar, Search, MapPin, FileText, User, Download } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import type { Search as SearchType } from "@/types/api"
 
@@ -225,6 +226,22 @@ export default function SearchesPage() {
         <p className="text-muted-foreground">View and manage all your background checks and search requests.</p>
       </div>
 
+      <RsiBanner
+        title="Background Check Management"
+        description="Monitor the status of background checks, view results, and order new searches. Our comprehensive screening solutions help you make informed decisions."
+      >
+        <div className="flex flex-wrap gap-3">
+          <Button className="bg-white text-primary-500 hover:bg-gray-100">
+            <FileText className="mr-2 h-4 w-4" />
+            Order New Check
+          </Button>
+          <Button variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
+            <Download className="mr-2 h-4 w-4" />
+            Download Reports
+          </Button>
+        </div>
+      </RsiBanner>
+
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative w-full sm:w-[250px]">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -259,12 +276,6 @@ export default function SearchesPage() {
             ))}
           </SelectContent>
         </Select>
-        <div className="ml-auto">
-          <Button>
-            <FileText className="mr-2 h-4 w-4" />
-            Order New Check
-          </Button>
-        </div>
       </div>
 
       <Tabs defaultValue="table" className="w-full">
@@ -320,41 +331,62 @@ export default function SearchesPage() {
           </Card>
         </TabsContent>
         <TabsContent value="cards" className="mt-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredSearches.length > 0 ? (
               filteredSearches.map((search) => (
                 <Card key={search.searchGuid} className="overflow-hidden">
-                  <CardContent className="p-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex items-center gap-2">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="flex items-center gap-2 text-lg">
                         {getStatusIcon(search.status)}
-                        <h3 className="font-medium">{search.displayName}</h3>
-                      </div>
+                        {search.displayName}
+                      </CardTitle>
                       {getStatusBadge(search.status)}
                     </div>
-                    <div className="space-y-2 text-sm">
+                    <CardDescription>
                       <div className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-                        <span>{search.location}</span>
+                        <MapPin className="h-3.5 w-3.5" />
+                        {search.location}
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5 text-muted-foreground" />
-                        <span>Ordered: {new Date(search.dateOrdered).toLocaleDateString()}</span>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pb-2">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-muted-foreground">Date Ordered:</span>
+                        <span className="text-sm">{new Date(search.dateOrdered).toLocaleDateString()}</span>
                       </div>
-                      {search.result && (
-                        <div className="flex items-center gap-2">
-                          <span>Result:</span>
-                          {getResultBadge(search.result)}
+                      {search.dateCompleted && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Date Completed:</span>
+                          <span className="text-sm">{new Date(search.dateCompleted).toLocaleDateString()}</span>
                         </div>
                       )}
-                      {search.issue && <div className="text-amber-600 text-sm mt-2">{search.issue}</div>}
-                    </div>
-                    <div className="mt-4">
-                      <Button variant="outline" size="sm" className="w-full" onClick={() => viewSearchDetails(search)}>
-                        View Details
-                      </Button>
+                      {search.estimatedCompletion && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Est. Completion:</span>
+                          <span className="text-sm">{new Date(search.estimatedCompletion).toLocaleDateString()}</span>
+                        </div>
+                      )}
+                      {search.result && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Result:</span>
+                          <span>{getResultBadge(search.result)}</span>
+                        </div>
+                      )}
+                      {search.issue && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">Issue:</span>
+                          <span className="text-sm text-amber-600">{search.issue}</span>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
+                  <CardFooter className="pt-2">
+                    <Button variant="outline" size="sm" className="w-full" onClick={() => viewSearchDetails(search)}>
+                      View Details
+                    </Button>
+                  </CardFooter>
                 </Card>
               ))
             ) : (
@@ -499,7 +531,7 @@ export default function SearchesPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
+      {/* The rest of the searches page content would go here */}
       {filteredSearches.length === 0 && !loading && (
         <div className="text-center py-12 bg-muted rounded-lg border">
           <FileText className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
