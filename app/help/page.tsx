@@ -1,158 +1,119 @@
-"use client"
-
-import { useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
-import { RsiBanner } from "@/components/rsi-banner"
-import { FileText, Mail, Phone, MessageSquare, Video, BookOpen, HelpCircle, Search, Download } from "lucide-react"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Search, FileText, Video, Mail, Phone, MessageSquare, Download } from "lucide-react"
 
 export default function HelpCenterPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-
   return (
-    <div className="flex flex-col gap-6">
+    <div className="container mx-auto py-6 space-y-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Help Center</h1>
-        <p className="text-muted-foreground">Find answers, resources, and support for using the RSI client portal.</p>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Help Center</h1>
+        <p className="text-muted-foreground">
+          Find answers to common questions, watch training videos, and get in touch with our support team.
+        </p>
       </div>
 
       {/* Search Bar */}
-      <div className="relative w-full max-w-md">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          placeholder="Search for help topics..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
-        />
+      <div className="relative max-w-xl mx-auto">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input placeholder="Search for help topics..." className="pl-10" />
       </div>
 
-      {/* Help Center Banner */}
-      <RsiBanner
-        title="Need Immediate Assistance?"
-        description="Our support team is available Monday through Friday, 8:00 AM to 6:00 PM EST to assist you with any questions or issues."
-      >
-        <div className="flex flex-wrap gap-3 mt-2">
-          <Button>
-            <Phone className="mr-2 h-4 w-4" />
-            Call Support
-          </Button>
-          <Button variant="outline" className="bg-white/20 text-white border-white/30 hover:bg-white/30">
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Live Chat
-          </Button>
-        </div>
-      </RsiBanner>
-
-      {/* Main Content Tabs */}
+      {/* Navigation Tabs */}
       <Tabs defaultValue="faq" className="w-full">
-        <TabsList className="grid w-full max-w-[600px] grid-cols-4">
-          <TabsTrigger value="faq">FAQ</TabsTrigger>
+        <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4">
+          <TabsTrigger value="faq">FAQs</TabsTrigger>
           <TabsTrigger value="videos">Training Videos</TabsTrigger>
           <TabsTrigger value="guides">Guides</TabsTrigger>
           <TabsTrigger value="contact">Contact Us</TabsTrigger>
         </TabsList>
 
-        {/* FAQ Tab */}
-        <TabsContent value="faq" className="mt-6" id="faq">
+        {/* FAQs Section */}
+        <TabsContent value="faq" id="faq" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <HelpCircle className="h-5 w-5 text-primary-500" />
-                Frequently Asked Questions
-              </CardTitle>
-              <CardDescription>Find answers to common questions about using the RSI client portal.</CardDescription>
+              <CardTitle>Frequently Asked Questions</CardTitle>
+              <CardDescription>Find answers to common questions about our services.</CardDescription>
             </CardHeader>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>How do I add a new applicant?</AccordionTrigger>
+                  <AccordionTrigger>How long does a typical background check take?</AccordionTrigger>
                   <AccordionContent>
-                    <p className="mb-2">To add a new applicant:</p>
-                    <ol className="list-decimal pl-5 space-y-1">
-                      <li>Navigate to the Applicants page from the main menu</li>
-                      <li>Click the "Add New Applicant" button in the top-right corner</li>
-                      <li>Fill out the required information in the form (fields marked with * are required)</li>
-                      <li>Click "Add Applicant" to save the new applicant</li>
-                    </ol>
-                    <p className="mt-2">The new applicant will immediately appear in your applicants list.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>How do I order a background check?</AccordionTrigger>
-                  <AccordionContent>
-                    <p className="mb-2">To order a background check:</p>
-                    <ol className="list-decimal pl-5 space-y-1">
-                      <li>Navigate to the Applicants page</li>
-                      <li>Find the applicant you want to order a check for</li>
-                      <li>Click the three dots menu (⋮) and select "Order Background Check"</li>
-                      <li>Select the type of background check package you want to order</li>
-                      <li>Review the details and click "Submit Order"</li>
-                    </ol>
-                    <p className="mt-2">You can track the status of the background check on the Searches page.</p>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-3">
-                  <AccordionTrigger>How long does a background check take?</AccordionTrigger>
-                  <AccordionContent>
-                    <p>Background check completion times vary based on the type of search:</p>
-                    <ul className="list-disc pl-5 space-y-1 mt-2">
-                      <li>
-                        <span className="font-medium">State Criminal Checks:</span> Typically 24-48 hours
-                      </li>
-                      <li>
-                        <span className="font-medium">County Criminal Checks:</span> 2-5 business days
-                      </li>
-                      <li>
-                        <span className="font-medium">Employment Verification:</span> 2-3 business days
-                      </li>
-                      <li>
-                        <span className="font-medium">Education Verification:</span> 1-3 business days
-                      </li>
-                      <li>
-                        <span className="font-medium">Credit Checks:</span> 24-48 hours
-                      </li>
-                    </ul>
+                    <p>
+                      Most background checks are completed within 2-3 business days. However, some searches may take
+                      longer depending on the type of check and the jurisdiction. County criminal searches, for example,
+                      can take 3-5 business days in some counties.
+                    </p>
                     <p className="mt-2">
-                      Some searches may take longer if there are issues contacting references or if additional research
-                      is needed.
+                      You can always check the status of your background checks in the "Searches" section of your
+                      dashboard.
                     </p>
                   </AccordionContent>
                 </AccordionItem>
-
-                <AccordionItem value="item-4">
-                  <AccordionTrigger>What do I do if a background check has an issue?</AccordionTrigger>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>What information do I need to provide for an applicant?</AccordionTrigger>
                   <AccordionContent>
-                    <p className="mb-2">If a background check has an issue:</p>
-                    <ol className="list-decimal pl-5 space-y-1">
-                      <li>Navigate to the Searches page</li>
-                      <li>Look for searches with a "Pending Information" status</li>
-                      <li>Click "View Details" to see what information is needed</li>
-                      <li>Click "Provide Information" to submit the required information</li>
-                    </ol>
-                    <p className="mt-2">You can also contact our support team for assistance with resolving issues.</p>
+                    <p>
+                      At minimum, you'll need to provide the applicant's full name, date of birth, and Social Security
+                      Number (SSN) for most background checks. For more comprehensive checks, you may also need:
+                    </p>
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                      <li>Current and previous addresses (past 7 years)</li>
+                      <li>Employment history</li>
+                      <li>Educational background</li>
+                      <li>Driver's license number (for driving record checks)</li>
+                      <li>Professional licenses (for license verification)</li>
+                    </ul>
                   </AccordionContent>
                 </AccordionItem>
-
-                <AccordionItem value="item-5">
-                  <AccordionTrigger>How do I download a completed background check report?</AccordionTrigger>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>How do I interpret the results of a background check?</AccordionTrigger>
                   <AccordionContent>
-                    <p className="mb-2">To download a completed background check report:</p>
-                    <ol className="list-decimal pl-5 space-y-1">
-                      <li>Navigate to the Searches page</li>
-                      <li>Find the completed search you want to download</li>
-                      <li>Click "View Details"</li>
-                      <li>Click the "Download Report" button</li>
-                    </ol>
+                    <p>Background check results are typically marked as either "Clear" or "Alert":</p>
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                      <li>
+                        <strong>Clear:</strong> No records were found that match the search criteria.
+                      </li>
+                      <li>
+                        <strong>Alert:</strong> Records were found that match the search criteria. You should review
+                        these records carefully.
+                      </li>
+                    </ul>
                     <p className="mt-2">
-                      Reports are available in PDF format and can be saved or printed for your records.
+                      For detailed information on interpreting specific types of searches, please refer to our guides
+                      section or contact our support team.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger>What should I do if an applicant disputes the results?</AccordionTrigger>
+                  <AccordionContent>
+                    <p>If an applicant disputes the results of a background check, you should:</p>
+                    <ol className="list-decimal pl-6 mt-2 space-y-1">
+                      <li>Provide the applicant with a copy of the background check report.</li>
+                      <li>Inform them of their right to dispute the information.</li>
+                      <li>Direct them to contact our dispute resolution team at disputes@referenceservicesinc.com.</li>
+                      <li>We will investigate the dispute and provide an updated report if necessary.</li>
+                    </ol>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                  <AccordionTrigger>How secure is my applicant's information?</AccordionTrigger>
+                  <AccordionContent>
+                    <p>We take data security very seriously. All applicant information is:</p>
+                    <ul className="list-disc pl-6 mt-2 space-y-1">
+                      <li>Encrypted both in transit and at rest</li>
+                      <li>Stored in secure, SOC 2 compliant data centers</li>
+                      <li>Accessible only to authorized personnel</li>
+                      <li>Handled in compliance with FCRA regulations</li>
+                      <li>Protected by multi-factor authentication</li>
+                    </ul>
+                    <p className="mt-2">
+                      For more information about our security practices, please contact our security team.
                     </p>
                   </AccordionContent>
                 </AccordionItem>
@@ -161,91 +122,92 @@ export default function HelpCenterPage() {
           </Card>
         </TabsContent>
 
-        {/* Training Videos Tab */}
-        <TabsContent value="videos" className="mt-6" id="videos">
+        {/* Training Videos Section */}
+        <TabsContent value="videos" id="videos" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Video className="h-5 w-5 text-primary-500" />
-                Training Videos
-              </CardTitle>
-              <CardDescription>Watch step-by-step tutorials on how to use the RSI client portal.</CardDescription>
+              <CardTitle>Training Videos</CardTitle>
+              <CardDescription>Watch tutorials and learn how to use our platform effectively.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Video 1 */}
-                <div className="space-y-3">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Video className="h-12 w-12 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-muted-foreground">Getting Started with RSI Client Portal</p>
-                    </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="aspect-video bg-muted relative flex items-center justify-center">
+                    <Video className="h-12 w-12 text-muted-foreground" />
+                    <Button className="absolute" variant="secondary">
+                      Watch Video
+                    </Button>
                   </div>
-                  <h3 className="font-medium">Getting Started with RSI Client Portal</h3>
-                  <p className="text-sm text-muted-foreground">
-                    This video provides an overview of the RSI client portal and how to navigate the dashboard.
-                  </p>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>Duration: 5:32</span>
-                    <span className="mx-2">•</span>
-                    <span>Updated: June 2025</span>
+                  <div className="p-4">
+                    <h3 className="font-medium mb-1">Getting Started with RSI Dashboard</h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Learn how to navigate the dashboard and access key features.
+                    </p>
+                    <div className="flex items-center text-xs text-muted-foreground">
+                      <span>Duration: 5:32</span>
+                      <span className="mx-2">•</span>
+                      <span>Updated: May 2025</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Video 2 */}
-                <div className="space-y-3">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Video className="h-12 w-12 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-muted-foreground">Adding and Managing Applicants</p>
-                    </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="aspect-video bg-muted relative flex items-center justify-center">
+                    <Video className="h-12 w-12 text-muted-foreground" />
+                    <Button className="absolute" variant="secondary">
+                      Watch Video
+                    </Button>
                   </div>
-                  <h3 className="font-medium">Adding and Managing Applicants</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Learn how to add new applicants, edit their information, and manage their records.
-                  </p>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>Duration: 7:15</span>
-                    <span className="mx-2">•</span>
-                    <span>Updated: June 2025</span>
+                  <div className="p-4">
+                    <h3 className="font-medium mb-1">Ordering Background Checks</h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Step-by-step guide to ordering different types of background checks.
+                    </p>
+                    <div className="flex items-center text-xs text-muted-foreground">
+                      <span>Duration: 7:15</span>
+                      <span className="mx-2">•</span>
+                      <span>Updated: May 2025</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Video 3 */}
-                <div className="space-y-3">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Video className="h-12 w-12 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-muted-foreground">Ordering Background Checks</p>
-                    </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="aspect-video bg-muted relative flex items-center justify-center">
+                    <Video className="h-12 w-12 text-muted-foreground" />
+                    <Button className="absolute" variant="secondary">
+                      Watch Video
+                    </Button>
                   </div>
-                  <h3 className="font-medium">Ordering Background Checks</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Step-by-step guide on how to order different types of background checks for your applicants.
-                  </p>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>Duration: 6:48</span>
-                    <span className="mx-2">•</span>
-                    <span>Updated: May 2025</span>
+                  <div className="p-4">
+                    <h3 className="font-medium mb-1">Understanding Background Check Results</h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      How to interpret different types of background check results.
+                    </p>
+                    <div className="flex items-center text-xs text-muted-foreground">
+                      <span>Duration: 8:45</span>
+                      <span className="mx-2">•</span>
+                      <span>Updated: May 2025</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Video 4 */}
-                <div className="space-y-3">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Video className="h-12 w-12 mx-auto mb-2 text-muted-foreground" />
-                      <p className="text-muted-foreground">Understanding Background Check Results</p>
-                    </div>
+                <div className="border rounded-lg overflow-hidden">
+                  <div className="aspect-video bg-muted relative flex items-center justify-center">
+                    <Video className="h-12 w-12 text-muted-foreground" />
+                    <Button className="absolute" variant="secondary">
+                      Watch Video
+                    </Button>
                   </div>
-                  <h3 className="font-medium">Understanding Background Check Results</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Learn how to interpret background check results and understand the different status indicators.
-                  </p>
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <span>Duration: 8:22</span>
-                    <span className="mx-2">•</span>
-                    <span>Updated: May 2025</span>
+                  <div className="p-4">
+                    <h3 className="font-medium mb-1">Managing Applicants</h3>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Learn how to add, edit, and manage applicant information.
+                    </p>
+                    <div className="flex items-center text-xs text-muted-foreground">
+                      <span>Duration: 6:20</span>
+                      <span className="mx-2">•</span>
+                      <span>Updated: May 2025</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -253,210 +215,160 @@ export default function HelpCenterPage() {
           </Card>
         </TabsContent>
 
-        {/* Guides Tab */}
-        <TabsContent value="guides" className="mt-6" id="guides">
+        {/* Guides Section */}
+        <TabsContent value="guides" id="guides" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-primary-500" />
-                Guides and Resources
-              </CardTitle>
-              <CardDescription>
-                Download comprehensive guides and resources for using the RSI client portal.
-              </CardDescription>
+              <CardTitle>Guides & Resources</CardTitle>
+              <CardDescription>Download comprehensive guides and resources.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Guide 1 */}
-                <Card className="border shadow-sm">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary-50 p-3 rounded-lg">
-                        <FileText className="h-6 w-6 text-primary-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium mb-1">User Manual</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Complete user manual covering all features of the RSI client portal.
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">PDF • 4.2 MB</span>
-                          <Button size="sm" variant="outline" className="h-8">
-                            <Download className="mr-2 h-3.5 w-3.5" />
-                            Download
-                          </Button>
-                        </div>
-                      </div>
+                <div className="border rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary-50 p-3 rounded-lg">
+                      <FileText className="h-6 w-6 text-primary-500" />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-1">Complete User Guide</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Comprehensive guide to all features and functionality of the RSI platform.
+                      </p>
+                      <Button size="sm" className="gap-1">
+                        <Download className="h-4 w-4" /> Download PDF
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
-                {/* Guide 2 */}
-                <Card className="border shadow-sm">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary-50 p-3 rounded-lg">
-                        <FileText className="h-6 w-6 text-primary-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium mb-1">Quick Start Guide</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Essential information to get started with the RSI client portal quickly.
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">PDF • 1.8 MB</span>
-                          <Button size="sm" variant="outline" className="h-8">
-                            <Download className="mr-2 h-3.5 w-3.5" />
-                            Download
-                          </Button>
-                        </div>
-                      </div>
+                <div className="border rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary-50 p-3 rounded-lg">
+                      <FileText className="h-6 w-6 text-primary-500" />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-1">Background Check Types</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Detailed information about each type of background check and when to use them.
+                      </p>
+                      <Button size="sm" className="gap-1">
+                        <Download className="h-4 w-4" /> Download PDF
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
-                {/* Guide 3 */}
-                <Card className="border shadow-sm">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary-50 p-3 rounded-lg">
-                        <FileText className="h-6 w-6 text-primary-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium mb-1">Background Check Types</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Detailed information about the different types of background checks available.
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">PDF • 2.5 MB</span>
-                          <Button size="sm" variant="outline" className="h-8">
-                            <Download className="mr-2 h-3.5 w-3.5" />
-                            Download
-                          </Button>
-                        </div>
-                      </div>
+                <div className="border rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary-50 p-3 rounded-lg">
+                      <FileText className="h-6 w-6 text-primary-500" />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex-1">
+                      <h />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-1">FCRA Compliance Guide</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Essential information about Fair Credit Reporting Act compliance for employers.
+                      </p>
+                      <Button size="sm" className="gap-1">
+                        <Download className="h-4 w-4" /> Download PDF
+                      </Button>
+                    </div>
+                  </div>
+                </div>
 
-                {/* Guide 4 */}
-                <Card className="border shadow-sm">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-primary-50 p-3 rounded-lg">
-                        <FileText className="h-6 w-6 text-primary-500" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium mb-1">Compliance Guide</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          Information about compliance requirements for background checks.
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-muted-foreground">PDF • 3.1 MB</span>
-                          <Button size="sm" variant="outline" className="h-8">
-                            <Download className="mr-2 h-3.5 w-3.5" />
-                            Download
-                          </Button>
-                        </div>
-                      </div>
+                <div className="border rounded-lg p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="bg-primary-50 p-3 rounded-lg">
+                      <FileText className="h-6 w-6 text-primary-500" />
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-1">Adverse Action Procedures</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Step-by-step guide to handling adverse action based on background check results.
+                      </p>
+                      <Button size="sm" className="gap-1">
+                        <Download className="h-4 w-4" /> Download PDF
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
-        {/* Contact Us Tab */}
-        <TabsContent value="contact" className="mt-6" id="contact">
+        {/* Contact Us Section */}
+        <TabsContent value="contact" id="contact" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-primary-500" />
-                Contact Us
-              </CardTitle>
+              <CardTitle>Contact Us</CardTitle>
               <CardDescription>Get in touch with our support team for assistance.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Contact Information</h3>
-
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <Phone className="h-5 w-5 text-primary-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Phone Support</h4>
-                        <p className="text-muted-foreground">(800) 555-1234</p>
-                        <p className="text-sm text-muted-foreground">Monday-Friday, 8:00 AM - 6:00 PM EST</p>
-                      </div>
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <h3 className="font-medium">Customer Support</h3>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-primary-500" />
+                      <span>(800) 555-1234</span>
                     </div>
-
-                    <div className="flex items-start gap-3">
-                      <Mail className="h-5 w-5 text-primary-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Email Support</h4>
-                        <p className="text-muted-foreground">support@referenceservicesinc.com</p>
-                        <p className="text-sm text-muted-foreground">Response within 24 business hours</p>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-primary-500" />
+                      <span>support@referenceservicesinc.com</span>
                     </div>
-
-                    <div className="flex items-start gap-3">
-                      <MessageSquare className="h-5 w-5 text-primary-500 mt-0.5" />
-                      <div>
-                        <h4 className="font-medium">Live Chat</h4>
-                        <p className="text-muted-foreground">Available during business hours</p>
-                        <Button size="sm" className="mt-1">
-                          Start Chat
-                        </Button>
-                      </div>
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="h-4 w-4 text-primary-500" />
+                      <span>Live Chat (Available 8AM-6PM EST)</span>
                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="font-medium">Hours of Operation</h3>
+                    <p className="text-sm">Monday - Friday: 8:00 AM - 6:00 PM EST</p>
+                    <p className="text-sm">Saturday: 9:00 AM - 1:00 PM EST</p>
+                    <p className="text-sm">Sunday: Closed</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="font-medium">Emergency Support</h3>
+                    <p className="text-sm">
+                      For urgent matters outside of business hours, please call our emergency support line at (800)
+                      555-9876.
+                    </p>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-medium mb-4">Send a Message</h3>
+                <div className="border rounded-lg p-6">
+                  <h3 className="font-medium mb-4">Send Us a Message</h3>
                   <form className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input id="name" placeholder="Your name" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="your.email@example.com" />
-                      </div>
-                    </div>
-
                     <div className="space-y-2">
-                      <Label htmlFor="subject">Subject</Label>
-                      <Input id="subject" placeholder="How can we help you?" />
+                      <label htmlFor="name" className="text-sm font-medium">
+                        Name
+                      </label>
+                      <Input id="name" placeholder="Your name" />
                     </div>
-
                     <div className="space-y-2">
-                      <Label htmlFor="message">Message</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Please describe your issue or question in detail..."
-                        rows={5}
-                      />
+                      <label htmlFor="email" className="text-sm font-medium">
+                        Email
+                      </label>
+                      <Input id="email" type="email" placeholder="Your email address" />
                     </div>
-
                     <div className="space-y-2">
-                      <Label htmlFor="priority">Priority</Label>
-                      <select
-                        id="priority"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <option value="low">Low - General Question</option>
-                        <option value="medium">Medium - Need Assistance</option>
-                        <option value="high">High - Urgent Issue</option>
-                      </select>
+                      <label htmlFor="subject" className="text-sm font-medium">
+                        Subject
+                      </label>
+                      <Input id="subject" placeholder="Message subject" />
                     </div>
-
-                    <Button type="submit" className="w-full">
-                      Submit Message
-                    </Button>
+                    <div className="space-y-2">
+                      <label htmlFor="message" className="text-sm font-medium">
+                        Message
+                      </label>
+                      <Textarea id="message" placeholder="Type your message here..." rows={4} />
+                    </div>
+                    <Button className="w-full">Send Message</Button>
                   </form>
                 </div>
               </div>

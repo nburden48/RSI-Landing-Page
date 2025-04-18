@@ -31,7 +31,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     <ThemeProvider attribute="class" defaultTheme="light">
       <SidebarProvider>
         <div className="flex min-h-screen w-full bg-muted/40">
-          <Sidebar className="bg-primary-800">
+          <Sidebar className="bg-primary-800 text-white border-r border-primary-700">
             <SidebarHeader className="flex h-16 items-center border-b border-primary-700 px-4">
               <div className="flex items-center gap-2 font-heading font-semibold">
                 <RsiLogo size={32} />
@@ -48,7 +48,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/"}
                         tooltip="Dashboard"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/">
                           <Home className="h-4 w-4" />
@@ -61,7 +61,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/applicants"}
                         tooltip="Applicants"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/applicants">
                           <Users className="h-4 w-4" />
@@ -74,7 +74,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/searches"}
                         tooltip="Searches"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/searches">
                           <FileSearch className="h-4 w-4" />
@@ -87,7 +87,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/messages"}
                         tooltip="Messages"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/messages">
                           <MessageSquare className="h-4 w-4" />
@@ -108,7 +108,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/profile"}
                         tooltip="Profile"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/profile">
                           <User className="h-4 w-4" />
@@ -121,7 +121,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/settings"}
                         tooltip="Settings"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/settings">
                           <Settings className="h-4 w-4" />
@@ -142,7 +142,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                         asChild
                         isActive={pathname === "/help"}
                         tooltip="Help Center"
-                        className="text-white hover:bg-primary-700 data-[active=true]:bg-primary-700"
+                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
                       >
                         <Link href="/help">
                           <HelpCircle className="h-4 w-4" />
