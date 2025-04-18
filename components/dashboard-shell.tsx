@@ -31,25 +31,20 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     <ThemeProvider attribute="class" defaultTheme="light">
       <SidebarProvider>
         <div className="flex min-h-screen w-full bg-muted/40">
-          <Sidebar className="bg-primary-800 text-white border-r border-primary-700">
-            <SidebarHeader className="flex h-16 items-center border-b border-primary-700 px-4">
+          <Sidebar>
+            <SidebarHeader className="flex h-16 items-center border-b px-4">
               <div className="flex items-center gap-2 font-heading font-semibold">
                 <RsiLogo size={32} />
-                <span className="text-white">Reference Services Inc.</span>
+                <span className="text-primary-500">Reference Services Inc.</span>
               </div>
             </SidebarHeader>
             <SidebarContent>
               <SidebarGroup>
-                <SidebarGroupLabel className="text-primary-200">Menu</SidebarGroupLabel>
+                <SidebarGroupLabel>Menu</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/"}
-                        tooltip="Dashboard"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/"} tooltip="Dashboard">
                         <Link href="/">
                           <Home className="h-4 w-4" />
                           <span>Dashboard</span>
@@ -57,12 +52,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/applicants"}
-                        tooltip="Applicants"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/applicants"} tooltip="Applicants">
                         <Link href="/applicants">
                           <Users className="h-4 w-4" />
                           <span>Applicants</span>
@@ -70,12 +60,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/searches"}
-                        tooltip="Searches"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/searches"} tooltip="Searches">
                         <Link href="/searches">
                           <FileSearch className="h-4 w-4" />
                           <span>Searches</span>
@@ -83,12 +68,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/messages"}
-                        tooltip="Messages"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/messages"} tooltip="Messages">
                         <Link href="/messages">
                           <MessageSquare className="h-4 w-4" />
                           <span>Messages</span>
@@ -98,18 +78,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>
-              <SidebarSeparator className="bg-primary-700" />
+              <SidebarSeparator />
               <SidebarGroup>
-                <SidebarGroupLabel className="text-primary-200">Account</SidebarGroupLabel>
+                <SidebarGroupLabel>Account</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/profile"}
-                        tooltip="Profile"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/profile"} tooltip="Profile">
                         <Link href="/profile">
                           <User className="h-4 w-4" />
                           <span>Profile</span>
@@ -117,12 +92,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/settings"}
-                        tooltip="Settings"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
+                      <SidebarMenuButton asChild isActive={pathname === "/settings"} tooltip="Settings">
                         <Link href="/settings">
                           <Settings className="h-4 w-4" />
                           <span>Settings</span>
@@ -132,19 +102,14 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>
-              <SidebarSeparator className="bg-primary-700" />
+              <SidebarSeparator />
               <SidebarGroup>
-                <SidebarGroupLabel className="text-primary-200">Support</SidebarGroupLabel>
+                <SidebarGroupLabel>Support</SidebarGroupLabel>
                 <SidebarGroupContent>
                   <SidebarMenu>
                     <SidebarMenuItem>
-                      <SidebarMenuButton
-                        asChild
-                        isActive={pathname === "/help"}
-                        tooltip="Help Center"
-                        className="text-white hover:bg-primary-700 hover:text-white data-[active=true]:bg-primary-700 data-[active=true]:text-white"
-                      >
-                        <Link href="/help">
+                      <SidebarMenuButton asChild tooltip="Help Center">
+                        <Link href="#" className="text-primary-500">
                           <HelpCircle className="h-4 w-4" />
                           <span>Help Center</span>
                         </Link>
@@ -154,17 +119,17 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
                 </SidebarGroupContent>
               </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter className="border-t border-primary-700 p-4">
+            <SidebarFooter className="border-t p-4">
               <div className="flex items-center gap-2">
                 <Avatar className="h-8 w-8 bg-primary-100">
                   <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Client" />
                   <AvatarFallback className="bg-primary-100 text-primary-700">CL</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-white">Client Company</span>
-                  <span className="text-xs text-primary-200">hr@clientcompany.com</span>
+                  <span className="text-sm font-medium">Client Company</span>
+                  <span className="text-xs text-muted-foreground">hr@clientcompany.com</span>
                 </div>
-                <Button variant="ghost" size="icon" className="ml-auto text-white hover:bg-primary-700">
+                <Button variant="ghost" size="icon" className="ml-auto">
                   <LogOut className="h-4 w-4" />
                   <span className="sr-only">Log out</span>
                 </Button>

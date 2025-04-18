@@ -19,7 +19,6 @@ export default function SettingsPage() {
   const [searchIssue, setSearchIssue] = useState(true)
   const [newMessage, setNewMessage] = useState(true)
   const [reportReady, setReportReady] = useState(true)
-  const [contentDensity, setContentDensity] = useState("comfortable")
 
   return (
     <div className="flex flex-col gap-6">
@@ -73,6 +72,48 @@ export default function SettingsPage() {
                               <span>System</span>
                             </div>
                           </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Language & Region</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="language">Language</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Select your preferred language for the dashboard.
+                        </p>
+                      </div>
+                      <Select defaultValue="en">
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select language" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="en">English</SelectItem>
+                          <SelectItem value="es">Español</SelectItem>
+                          <SelectItem value="fr">Français</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-0.5">
+                        <Label htmlFor="dateFormat">Date Format</Label>
+                        <p className="text-sm text-muted-foreground">Select your preferred date format.</p>
+                      </div>
+                      <Select defaultValue="mm-dd-yyyy">
+                        <SelectTrigger className="w-[180px]">
+                          <SelectValue placeholder="Select date format" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mm-dd-yyyy">MM/DD/YYYY</SelectItem>
+                          <SelectItem value="dd-mm-yyyy">DD/MM/YYYY</SelectItem>
+                          <SelectItem value="yyyy-mm-dd">YYYY/MM/DD</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -259,14 +300,14 @@ export default function SettingsPage() {
                 <Separator />
 
                 <div className="space-y-4">
-                  <h3 className="text-lg font-medium">Content Density</h3>
+                  <h3 className="text-lg font-medium">Density</h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <div className="space-y-0.5">
                         <Label htmlFor="density">Content Density</Label>
                         <p className="text-sm text-muted-foreground">Adjust the density of content in the dashboard.</p>
                       </div>
-                      <Select value={contentDensity} onValueChange={setContentDensity}>
+                      <Select defaultValue="comfortable">
                         <SelectTrigger className="w-[180px]">
                           <SelectValue placeholder="Select density" />
                         </SelectTrigger>
@@ -276,49 +317,6 @@ export default function SettingsPage() {
                           <SelectItem value="spacious">Spacious</SelectItem>
                         </SelectContent>
                       </Select>
-                    </div>
-
-                    {/* Content Density Examples */}
-                    <div className="mt-6 space-y-6">
-                      <h4 className="text-sm font-medium">Content Density Examples</h4>
-
-                      {contentDensity === "compact" && (
-                        <div className="border rounded-md p-2">
-                          <h5 className="text-sm font-medium mb-1">Compact Density</h5>
-                          <div className="space-y-1">
-                            <div className="bg-muted/50 p-1 rounded text-xs">Reduced padding and spacing</div>
-                            <div className="bg-muted/50 p-1 rounded text-xs">Smaller text and controls</div>
-                            <div className="bg-muted/50 p-1 rounded text-xs">More content fits on screen</div>
-                            <div className="bg-muted/50 p-1 rounded text-xs">Ideal for power users</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {contentDensity === "comfortable" && (
-                        <div className="border rounded-md p-4">
-                          <h5 className="text-sm font-medium mb-2">Comfortable Density</h5>
-                          <div className="space-y-2">
-                            <div className="bg-muted/50 p-2 rounded text-sm">Balanced padding and spacing</div>
-                            <div className="bg-muted/50 p-2 rounded text-sm">Standard text and controls</div>
-                            <div className="bg-muted/50 p-2 rounded text-sm">
-                              Good balance of content and whitespace
-                            </div>
-                            <div className="bg-muted/50 p-2 rounded text-sm">Default setting for most users</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {contentDensity === "spacious" && (
-                        <div className="border rounded-md p-6">
-                          <h5 className="text-base font-medium mb-3">Spacious Density</h5>
-                          <div className="space-y-3">
-                            <div className="bg-muted/50 p-3 rounded text-sm">Increased padding and spacing</div>
-                            <div className="bg-muted/50 p-3 rounded text-sm">Larger text and controls</div>
-                            <div className="bg-muted/50 p-3 rounded text-sm">More whitespace between elements</div>
-                            <div className="bg-muted/50 p-3 rounded text-sm">Ideal for touch interfaces</div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { RsiBanner } from "@/components/rsi-banner"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -18,22 +19,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { MessageSquare, Search, Plus, Mail, MailOpen, Send, Clock, ArrowLeft, Trash2, FileText } from "lucide-react"
+import { MessageSquare, Search, Plus, Mail, MailOpen, Send, Clock, ArrowLeft, Trash2 } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import type { Message } from "@/types/api"
-
-// Mock data for orders and applicants for reference selection
-const mockOrders = [
-  { orderGuid: "ord-a1b2c3d4-e5f6-g7h8-i9j0", reference: "JOB123", applicantName: "John Smith" },
-  { orderGuid: "ord-b2c3d4e5-f6g7-h8i9-j0k1", reference: "JOB124", applicantName: "Sarah Johnson" },
-  { orderGuid: "ord-c3d4e5f6-g7h8-i9j0-k1l2", reference: "JOB125", applicantName: "Michael Chen" },
-]
-
-const mockApplicants = [
-  { applicantGuid: "a1b2c3d4-e5f6-g7h8-i9j0-k1l2m3n4o5p6", name: "John Smith" },
-  { applicantGuid: "b2c3d4e5-f6g7-h8i9-j0k1-l2m3n4o5p6q7", name: "Sarah Johnson" },
-  { applicantGuid: "c3d4e5f6-g7h8-i9j0-k1l2-m3n4o5p6q7r8", name: "Michael Chen" },
-]
 
 export default function MessagesPage() {
   const [messages, setMessages] = useState<Message[]>([])
@@ -43,7 +31,6 @@ export default function MessagesPage() {
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null)
   const [isViewMessageOpen, setIsViewMessageOpen] = useState(false)
   const [isNewMessageOpen, setIsNewMessageOpen] = useState(false)
-  const [isReferenceDialogOpen, setIsReferenceDialogOpen] = useState(false)
   const [newMessage, setNewMessage] = useState({
     subject: "",
     content: "",
@@ -180,32 +167,6 @@ export default function MessagesPage() {
     })
   }
 
-  // Add reference to message
-  const addReference = (type: "order" | "applicant", id: string) => {
-    let referenceText = ""
-
-    if (type === "order") {
-      const order = mockOrders.find((o) => o.orderGuid === id)
-      if (order) {
-        referenceText = `Order ID: ${id}\nReference: ${order.reference}\nApplicant: ${order.applicantName}\n\n`
-      }
-    } else if (type === "applicant") {
-      const applicant = mockApplicants.find((a) => a.applicantGuid === id)
-      if (applicant) {
-        referenceText = `Applicant ID: ${id}\nApplicant Name: ${applicant.name}\n\n`
-      }
-    }
-
-    setNewMessage({
-      ...newMessage,
-      content: newMessage.content + referenceText,
-      orderGuid: type === "order" ? id : newMessage.orderGuid,
-      applicantGuid: type === "applicant" ? id : newMessage.applicantGuid,
-    })
-
-    setIsReferenceDialogOpen(false)
-  }
-
   if (loading) {
     return (
       <div className="flex flex-col gap-6">
@@ -237,10 +198,15 @@ export default function MessagesPage() {
         <p className="text-muted-foreground">View and manage your communication with Reference Services Inc.</p>
       </div>
 
-      <Button onClick={() => setIsNewMessageOpen(true)}>
-        <Send className="mr-2 h-4 w-4" />
-        New Message
-      </Button>
+      <RsiBanner
+        title="Communication Center"
+        description="Stay in touch with our team, ask questions, and receive important updates about your background checks and applicants."
+      >
+        <Button className="bg-white text-primary-500 hover:bg-gray-100" onClick={() => setIsNewMessageOpen(true)}>
+          <Send className="mr-2 h-4 w-4" />
+          New Message
+        </Button>
+      </RsiBanner>
 
       <div className="flex flex-col sm:flex-row justify-between gap-4">
         <div className="flex flex-col sm:flex-row gap-4">
@@ -286,12 +252,7 @@ export default function MessagesPage() {
                 />
               </div>
               <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <Label htmlFor="content">Message</Label>
-                  <Button variant="outline" size="sm" onClick={() => setIsReferenceDialogOpen(true)}>
-                    <FileText className="h-3.5 w-3.5 mr-1" /> Add Reference
-                  </Button>
-                </div>
+                <Label htmlFor="content">Message</Label>
                 <Textarea
                   id="content"
                   value={newMessage.content}
@@ -300,6 +261,26 @@ export default function MessagesPage() {
                   rows={5}
                 />
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="orderGuid">Related Order (Optional)</Label>
+                  <Input
+                    id="orderGuid"
+                    value={newMessage.orderGuid}
+                    onChange={(e) => setNewMessage({ ...newMessage, orderGuid: e.target.value })}
+                    placeholder="Order ID"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="applicantGuid">Related Applicant (Optional)</Label>
+                  <Input
+                    id="applicantGuid"
+                    value={newMessage.applicantGuid}
+                    onChange={(e) => setNewMessage({ ...newMessage, applicantGuid: e.target.value })}
+                    placeholder="Applicant ID"
+                  />
+                </div>
+              </div>
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsNewMessageOpen(false)}>
@@ -307,62 +288,6 @@ export default function MessagesPage() {
               </Button>
               <Button onClick={sendMessage} disabled={!newMessage.subject || !newMessage.content}>
                 <Send className="mr-2 h-4 w-4" /> Send Message
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        {/* Reference Selection Dialog */}
-        <Dialog open={isReferenceDialogOpen} onOpenChange={setIsReferenceDialogOpen}>
-          <DialogContent className="sm:max-w-[500px]">
-            <DialogHeader>
-              <DialogTitle>Add Reference</DialogTitle>
-              <DialogDescription>Select an order or applicant to reference in your message</DialogDescription>
-            </DialogHeader>
-            <Tabs defaultValue="orders">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="orders">Orders</TabsTrigger>
-                <TabsTrigger value="applicants">Applicants</TabsTrigger>
-              </TabsList>
-              <TabsContent value="orders" className="mt-4">
-                <div className="space-y-2">
-                  {mockOrders.map((order) => (
-                    <div
-                      key={order.orderGuid}
-                      className="flex justify-between items-center p-3 border rounded-md hover:bg-muted/50 cursor-pointer"
-                      onClick={() => addReference("order", order.orderGuid)}
-                    >
-                      <div>
-                        <div className="font-medium text-sm">{order.reference}</div>
-                        <div className="text-xs text-muted-foreground">{order.applicantName}</div>
-                      </div>
-                      <Button variant="ghost" size="sm">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </TabsContent>
-              <TabsContent value="applicants" className="mt-4">
-                <div className="space-y-2">
-                  {mockApplicants.map((applicant) => (
-                    <div
-                      key={applicant.applicantGuid}
-                      className="flex justify-between items-center p-3 border rounded-md hover:bg-muted/50 cursor-pointer"
-                      onClick={() => addReference("applicant", applicant.applicantGuid)}
-                    >
-                      <div className="font-medium text-sm">{applicant.name}</div>
-                      <Button variant="ghost" size="sm">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsReferenceDialogOpen(false)}>
-                Cancel
               </Button>
             </DialogFooter>
           </DialogContent>

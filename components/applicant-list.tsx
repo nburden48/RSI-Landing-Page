@@ -7,16 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  CheckSquare,
-  Clock,
-  AlertCircle,
-  Calendar,
-  MoreHorizontal,
-  ChevronDown,
-  ChevronUp,
-  UserPlus,
-} from "lucide-react"
+import { CheckSquare, Clock, AlertCircle, Calendar, MoreHorizontal, ChevronDown, ChevronUp } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import React from "react"
@@ -63,6 +54,11 @@ const ApplicantList = React.memo(function ApplicantList() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [openApplicant, setOpenApplicant] = useState<string | null>(null)
+
+  // Use useMemo for positions
+  const positions = useMemo(() => {
+    return [...new Set(mockApplicants.map((a) => a.proposedPosition).filter(Boolean))]
+  }, [])
 
   // Use useMemo for filtered applicants
   const filteredApplicants = useMemo(() => {
@@ -124,7 +120,7 @@ const ApplicantList = React.memo(function ApplicantList() {
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h2 className="text-2xl font-bold tracking-tight">Recent Applicants</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Your Applicants</h2>
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
             placeholder="Search applicants..."
@@ -143,10 +139,6 @@ const ApplicantList = React.memo(function ApplicantList() {
               <SelectItem value="pending">Pending Information</SelectItem>
             </SelectContent>
           </Select>
-          <Button>
-            <UserPlus className="mr-2 h-4 w-4" />
-            Add Applicant
-          </Button>
         </div>
       </div>
 
@@ -257,7 +249,7 @@ const ApplicantList = React.memo(function ApplicantList() {
           </div>
         </TabsContent>
         <TabsContent value="grid" className="mt-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredApplicants.length > 0 ? (
               filteredApplicants.map((applicant) => (
                 <Card key={applicant.applicantGuid} className="rsi-card overflow-hidden">

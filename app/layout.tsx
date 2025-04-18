@@ -3,7 +3,6 @@ import type { Metadata } from "next"
 import { Inter, Montserrat } from "next/font/google"
 import "./globals.css"
 import { DashboardShell } from "@/components/dashboard-shell"
-import { NotificationProvider } from "@/components/notification-provider"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,9 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${montserrat.variable} font-sans`}>
-        <NotificationProvider>
-          <DashboardShell>{children}</DashboardShell>
-        </NotificationProvider>
+        <DashboardShell>{children}</DashboardShell>
       </body>
     </html>
   )
