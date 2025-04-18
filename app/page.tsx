@@ -8,9 +8,9 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
       {/* Welcome Banner - Cosmetic only, no buttons */}
-      <div className="rsi-pattern-bg rounded-lg p-6 text-white">
-        <h1 className="text-3xl font-bold mb-2">Welcome to Reference Services Inc.</h1>
-        <p className="text-lg opacity-90 max-w-2xl">
+      <div className="rsi-pattern-bg rounded-lg py-3 px-6 text-white">
+        <h1 className="text-2xl font-bold mb-1">Welcome to Reference Services Inc.</h1>
+        <p className="text-sm opacity-90 max-w-2xl">
           Your trusted partner for comprehensive background screening solutions. Manage your applicants, track
           background checks, and access reports all in one place.
         </p>
