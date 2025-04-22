@@ -47,6 +47,79 @@ const mockApplicants = [
     status: "pending",
     dateSubmitted: "2025-04-03",
   },
+  {
+    applicantGuid: "d4e5f6g7-h8i9-j0k1-l2m3-n4o5p6q7r8s9",
+    firstName: "Emily",
+    lastName: "Rodriguez",
+    email: "emily.rodriguez@example.com",
+    phoneNumber: "(555) 456-7890",
+    proposedPosition: "HR Specialist",
+    status: "completed",
+    dateSubmitted: "2025-03-28",
+  },
+  {
+    applicantGuid: "e5f6g7h8-i9j0-k1l2-m3n4-o5p6q7r8s9t0",
+    firstName: "David",
+    middleName: "A",
+    lastName: "Wilson",
+    email: "david.wilson@example.com",
+    phoneNumber: "(555) 567-8901",
+    proposedPosition: "Project Manager",
+    status: "in-progress",
+    dateSubmitted: "2025-03-30",
+  },
+  {
+    applicantGuid: "f6g7h8i9-j0k1-l2m3-n4o5-p6q7r8s9t0u1",
+    firstName: "Jessica",
+    lastName: "Brown",
+    email: "jessica.brown@example.com",
+    phoneNumber: "(555) 678-9012",
+    proposedPosition: "Sales Representative",
+    status: "pending",
+    dateSubmitted: "2025-04-04",
+  },
+  {
+    applicantGuid: "g7h8i9j0-k1l2-m3n4-o5p6-q7r8s9t0u1v2",
+    firstName: "Robert",
+    middleName: "T",
+    lastName: "Garcia",
+    email: "robert.garcia@example.com",
+    phoneNumber: "(555) 789-0123",
+    proposedPosition: "Operations Manager",
+    status: "completed",
+    dateSubmitted: "2025-03-25",
+  },
+  {
+    applicantGuid: "h8i9j0k1-l2m3-n4o5-p6q7-r8s9t0u1v2w3",
+    firstName: "Amanda",
+    lastName: "Martinez",
+    email: "amanda.martinez@example.com",
+    phoneNumber: "(555) 890-1234",
+    proposedPosition: "Customer Service Rep",
+    status: "in-progress",
+    dateSubmitted: "2025-04-01",
+  },
+  {
+    applicantGuid: "i9j0k1l2-m3n4-o5p6-q7r8-s9t0u1v2w3x4",
+    firstName: "Thomas",
+    middleName: "J",
+    lastName: "Lee",
+    email: "thomas.lee@example.com",
+    phoneNumber: "(555) 901-2345",
+    proposedPosition: "IT Specialist",
+    status: "pending",
+    dateSubmitted: "2025-04-05",
+  },
+  {
+    applicantGuid: "j0k1l2m3-n4o5-p6q7-r8s9-t0u1v2w3x4y5",
+    firstName: "Jennifer",
+    lastName: "Taylor",
+    email: "jennifer.taylor@example.com",
+    phoneNumber: "(555) 012-3456",
+    proposedPosition: "Accountant",
+    status: "completed",
+    dateSubmitted: "2025-03-27",
+  },
 ]
 
 // Wrap the component with React.memo
@@ -118,9 +191,9 @@ const ApplicantList = React.memo(function ApplicantList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <div className="flex flex-col sm:flex-row justify-between gap-4">
-        <h2 className="text-2xl font-bold tracking-tight">Your Applicants</h2>
+        <h2 className="text-xl font-bold tracking-tight">Your Applicants</h2>
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
             placeholder="Search applicants..."
@@ -147,8 +220,8 @@ const ApplicantList = React.memo(function ApplicantList() {
           <TabsTrigger value="list">List View</TabsTrigger>
           <TabsTrigger value="grid">Grid View</TabsTrigger>
         </TabsList>
-        <TabsContent value="list" className="mt-4">
-          <div className="grid gap-4">
+        <TabsContent value="list" className="mt-3">
+          <div className="grid gap-3 max-h-[600px] overflow-y-auto pr-1">
             {filteredApplicants.length > 0 ? (
               filteredApplicants.map((applicant) => (
                 <Collapsible
@@ -157,21 +230,24 @@ const ApplicantList = React.memo(function ApplicantList() {
                   onOpenChange={() => {}}
                 >
                   <Card className="rsi-card">
-                    <CardHeader className="pb-2">
+                    <CardHeader className="pb-1 pt-3 px-4">
                       <div className="flex items-start justify-between">
-                        <div className="space-y-1">
-                          <CardTitle className="flex items-center gap-2">
+                        <div className="space-y-0.5">
+                          <CardTitle className="flex items-center gap-2 text-base">
                             {getStatusIcon(applicant.status)}
                             {applicant.firstName} {applicant.middleName} {applicant.lastName}
                           </CardTitle>
-                          <CardDescription>{applicant.proposedPosition || "No position specified"}</CardDescription>
+                          <CardDescription className="text-xs">
+                            {applicant.proposedPosition || "No position specified"}
+                          </CardDescription>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1">
                           {getStatusBadge(applicant.status)}
                           <CollapsibleTrigger asChild>
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="h-7 w-7"
                               onClick={() => toggleApplicant(applicant.applicantGuid)}
                             >
                               {openApplicant === applicant.applicantGuid ? (
@@ -184,7 +260,7 @@ const ApplicantList = React.memo(function ApplicantList() {
                           </CollapsibleTrigger>
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button variant="ghost" size="icon">
+                              <Button variant="ghost" size="icon" className="h-7 w-7">
                                 <MoreHorizontal className="h-4 w-4" />
                                 <span className="sr-only">Actions</span>
                               </Button>
@@ -198,38 +274,38 @@ const ApplicantList = React.memo(function ApplicantList() {
                         </div>
                       </div>
                     </CardHeader>
-                    <CardFooter className="flex justify-between text-xs text-muted-foreground py-2">
+                    <CardFooter className="flex justify-between text-xs text-muted-foreground py-1 px-4">
                       <div className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         Submitted: {new Date(applicant.dateSubmitted).toLocaleDateString()}
                       </div>
                     </CardFooter>
                     <CollapsibleContent>
-                      <CardContent className="pt-0 pb-3">
-                        <div className="border-t pt-3">
-                          <h4 className="text-sm font-medium mb-2">Applicant Details</h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-3">
+                      <CardContent className="pt-0 pb-3 px-4">
+                        <div className="border-t pt-2">
+                          <h4 className="text-xs font-medium mb-2">Applicant Details</h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="space-y-2">
                               <div>
-                                <p className="text-sm font-medium">Email</p>
-                                <p className="text-sm text-muted-foreground">{applicant.email || "Not provided"}</p>
+                                <p className="text-xs font-medium">Email</p>
+                                <p className="text-xs text-muted-foreground">{applicant.email || "Not provided"}</p>
                               </div>
                               <div>
-                                <p className="text-sm font-medium">Phone</p>
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-xs font-medium">Phone</p>
+                                <p className="text-xs text-muted-foreground">
                                   {applicant.phoneNumber || "Not provided"}
                                 </p>
                               </div>
                             </div>
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                               <div>
-                                <p className="text-sm font-medium">Position</p>
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-xs font-medium">Position</p>
+                                <p className="text-xs text-muted-foreground">
                                   {applicant.proposedPosition || "Not specified"}
                                 </p>
                               </div>
                               <div>
-                                <Button variant="link" className="h-auto p-0 text-sm">
+                                <Button variant="link" className="h-auto p-0 text-xs">
                                   View Background Checks
                                 </Button>
                               </div>
@@ -248,32 +324,34 @@ const ApplicantList = React.memo(function ApplicantList() {
             )}
           </div>
         </TabsContent>
-        <TabsContent value="grid" className="mt-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <TabsContent value="grid" className="mt-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[600px] overflow-y-auto pr-1">
             {filteredApplicants.length > 0 ? (
               filteredApplicants.map((applicant) => (
                 <Card key={applicant.applicantGuid} className="rsi-card overflow-hidden">
-                  <CardHeader className="pb-2">
+                  <CardHeader className="pb-1 pt-3 px-4">
                     <div className="flex justify-between items-start">
-                      <CardTitle className="text-lg">
+                      <CardTitle className="text-base">
                         {applicant.firstName} {applicant.lastName}
                       </CardTitle>
                       {getStatusBadge(applicant.status)}
                     </div>
-                    <CardDescription>{applicant.proposedPosition || "No position specified"}</CardDescription>
+                    <CardDescription className="text-xs">
+                      {applicant.proposedPosition || "No position specified"}
+                    </CardDescription>
                   </CardHeader>
-                  <CardContent className="pb-2">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-sm">
+                  <CardContent className="pb-1 pt-1 px-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 text-xs">
                         <span className="truncate">{applicant.email || "No email provided"}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-sm">
+                      <div className="flex items-center gap-2 text-xs">
                         <span>{applicant.phoneNumber || "No phone provided"}</span>
                       </div>
                     </div>
                   </CardContent>
-                  <CardFooter className="pt-2">
-                    <Button variant="outline" size="sm" className="w-full">
+                  <CardFooter className="pt-1 pb-3 px-4">
+                    <Button variant="outline" size="sm" className="w-full text-xs h-7">
                       View Details
                     </Button>
                   </CardFooter>
